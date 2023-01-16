@@ -28,23 +28,34 @@ class GildedRoseTest {
         Item[] items = new Item[] { new Item("foo", 10, 0)};
         GildedRose app = new GildedRose(items);
         app.updateQuality();
-        assertEquals(0, app.items[0].quality);
+        assertEquals(0, app.items[0].quality, "Quality goes down on regular item");
+        assertEquals(9, app.items[0].sellIn, "sellIn goes down on regular item");
     }
 
     @Test
     void qualityRisesIfAgedBrie() {
-        Item[] items = new Item[] { new Item(GildedRose.AGED_BRIE, 10, 5)};
+        Item[] items = new Item[] { new Item(GildedRose.AGED_BRIE, 1, 5)};
         GildedRose app = new GildedRose(items);
         app.updateQuality();
-        assertEquals(6, app.items[0].quality);
+        assertEquals(6, app.items[0].quality, "Quality goes up on Aged Brie");
+        assertEquals(0, app.items[0].sellIn, "sellIn should go down on Aged Brie");
+
+        app.updateQuality();
+        assertEquals(8, app.items[0].quality, "Quality on Aged Brie goes up by 2 after sellIn goes below 0");
+        assertEquals(-1, app.items[0].sellIn, "sellIn keeps going down on Aged Brie");
     }
 
     @Test
     void qualityCapIsFifty() {
-        Item[] items = new Item[] { new Item(GildedRose.AGED_BRIE, 10, 50)};
+        Item[] items = new Item[] {
+            new Item(GildedRose.AGED_BRIE, 10, 50),
+            new Item(GildedRose.BACKSTAGE_PASSES, 10, 50)};
         GildedRose app = new GildedRose(items);
         app.updateQuality();
-        assertTrue(app.items[0].quality <= 50, "Quality should always be 50 or less");
+        for(Item item : app.items) {
+            assertTrue(item.quality <= 50, "Quality should always be 50 or less");
+        }
+
     }
 
     @Test
