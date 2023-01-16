@@ -8,7 +8,10 @@ public class Item {
 
     public int quality;
 
-    public Item(String name, int sellIn, int quality) {
+    public Item(String name, int sellIn, int quality) throws IllegalArgumentException {
+        if (quality < 0 || quality > 50) {
+            throw new IllegalArgumentException("Quality should be a value from 0 to 50");
+        }
         this.name = name;
         this.sellIn = sellIn;
         this.quality = quality;

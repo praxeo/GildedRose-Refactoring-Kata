@@ -9,18 +9,18 @@ class GildedRoseTest {
 
     @Test
     void qualityDegradesByOne() {
-        Item[] items = new Item[] { new Item("foo", 1, 100) };
+        Item[] items = new Item[] { new Item("foo", 1, 50) };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
-        assertEquals(99, app.items[0].quality);
+        assertEquals(49, app.items[0].quality);
     }
 
     @Test
     void qualityDegradesByTwoAfterSellBy() {
-        Item[] items = new Item[] { new Item("foo", 0, 100)};
+        Item[] items = new Item[] { new Item("foo", 0, 30)};
         GildedRose app = new GildedRose(items);
         app.updateQuality();
-        assertEquals(98, app.items[0].quality);
+        assertEquals(28, app.items[0].quality);
     }
 
     @Test
